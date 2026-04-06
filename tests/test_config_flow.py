@@ -2,10 +2,10 @@
 
 import pytest
 
-from homeassistant.components.athletic_fitness_bg.athletic_api_client import (
+from custom_components.athletic_fitness_bg.athletic_api_client import (
     AthleticApiClientAuthError,
 )
-from homeassistant.components.athletic_fitness_bg.config_flow import ConfigFlow
+from custom_components.athletic_fitness_bg.config_flow import ConfigFlow
 from homeassistant.core import HomeAssistant
 
 
