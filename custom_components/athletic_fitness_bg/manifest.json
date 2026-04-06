@@ -1,7 +1,7 @@
 {
   "domain": "athletic_fitness_bg",
   "name": "Athletic Fitness Bulgaria",
-  "codeowners": ["@Nedevski"],
+  "codeowners": ["@nedevski"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/nedevski/hass_athletic_fitness_bulgaria",

@@ -2,7 +2,7 @@
   "name": "Athletic Fitness Bulgaria",
   "content_in_root": false,
   "country": "BG",
-  "homeassistant": "2025.03.0b0",
+  "homeassistant": "2025.03.0",
   "render_readme": true,
   "zip_release": true,
   "filename": "athletic_fitness_bg.zip"
