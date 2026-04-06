@@ -1,6 +1,6 @@
 {
-  "domain": "kat_bulgaria",
-  "name": "KAT Bulgaria",
+  "domain": "athletic_fitness_bg",
+  "name": "Athletic Fitness Bulgaria",
   "codeowners": ["@Nedevski"],
   "config_flow": true,
   "documentation": "https://github.com/nedevski/hass_athletic_fitness_bulgaria",
