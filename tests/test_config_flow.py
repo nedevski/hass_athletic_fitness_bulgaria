@@ -2,13 +2,12 @@
 
 from unittest.mock import AsyncMock, patch
 
-import pytest
-
 from custom_components.athletic_fitness_bg.athletic_api_client import (
     AthleticApiClient,
     AthleticApiClientAuthError,
 )
 from custom_components.athletic_fitness_bg.config_flow import ConfigFlow
+
 from homeassistant.core import HomeAssistant
 
 
@@ -27,7 +26,9 @@ async def test_config_flow_user_step(hass: HomeAssistant) -> None:
         with patch.object(
             AthleticApiClient,
             "get_gyms",
-            AsyncMock(return_value=[{"gymId": 1, "gymName": "Test Gym", "city": "Sofia"}]),
+            AsyncMock(
+                return_value=[{"gymId": 1, "gymName": "Test Gym", "city": "Sofia"}]
+            ),
         ):
             result = await flow.async_step_user({"email": "test", "password": "test"})
 
