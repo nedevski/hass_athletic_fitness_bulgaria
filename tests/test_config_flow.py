@@ -22,15 +22,14 @@ async def test_config_flow_user_step(hass: HomeAssistant) -> None:
     assert result["step_id"] == "user"
 
     # Test with valid credentials and mocked gym list
-    with patch.object(ConfigFlow, "_test_credentials", AsyncMock(return_value=None)):
-        with patch.object(
-            AthleticApiClient,
-            "get_gyms",
-            AsyncMock(
-                return_value=[{"gymId": 1, "gymName": "Test Gym", "city": "Sofia"}]
-            ),
-        ):
-            result = await flow.async_step_user({"email": "test", "password": "test"})
+    with patch.object(ConfigFlow, "_test_credentials", AsyncMock(return_value=None)), patch.object(
+        AthleticApiClient,
+        "get_gyms",
+        AsyncMock(
+            return_value=[{"gymId": 1, "gymName": "Test Gym", "city": "Sofia"}]
+        ),
+    ):
+        result = await flow.async_step_user({"email": "test", "password": "test"})
 
     assert result["type"] == "form"
     assert result["step_id"] == "location"
