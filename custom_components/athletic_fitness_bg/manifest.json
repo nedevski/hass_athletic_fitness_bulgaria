@@ -3,8 +3,10 @@
   "name": "Athletic Fitness Bulgaria",
   "codeowners": ["@Nedevski"],
   "config_flow": true,
+  "dependencies": [],
   "documentation": "https://github.com/nedevski/hass_athletic_fitness_bulgaria",
   "iot_class": "cloud_polling",
+  "integration_type": "hub",
   "issue_tracker": "https://github.com/nedevski/hass_athletic_fitness_bulgaria/issues",
   "version": "0.1.0"
 }
