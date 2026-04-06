@@ -1,6 +1,5 @@
 {
   "name": "Athletic Fitness Bulgaria",
-  "content_in_root": false,
   "country": "BG",
   "homeassistant": "2025.03.0",
   "render_readme": true,
