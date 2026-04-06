@@ -1,0 +1,22 @@
+[project]
+name = "hass_athletic_fitness_bulgaria"
+version = "1.0.0"
+description = "A custom HomeAssistant component to check how many people are in Athetic Fitness locations"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13"
+authors = [{ name = "Nikola Nedevski", email = "nikola.nedevski@gmail.com" }]
+keywords = ["athletic", "fitness", "bulgaria", "homeassistant"]
+
+[project.urls]
+Homepage = "https://github.com/Nedevski/hass_athletic_fitness_bulgaria"
+Issues = "https://github.com/Nedevski/hass_athletic_fitness_bulgaria/issues"
+Repository = "https://github.com/Nedevski/hass_athletic_fitness_bulgaria.git"
+Donate = "https://ko-fi.com/nedevski/tip"
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools", "wheel"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
