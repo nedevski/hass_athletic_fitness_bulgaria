@@ -63,7 +63,7 @@ async def test_config_flow_location_creates_entry(hass: HomeAssistant) -> None:
         patch.object(AthleticApiClient, "get_gyms", AsyncMock(return_value=GYM_LIST)),
     ):
         location_step = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {"email": "test@example.com", "password": "password"}
+            result["flow_id"], {"email": "test@example.com", "password": "test_password"}
         )
         result = await hass.config_entries.flow.async_configure(
             location_step["flow_id"], {"gym_ids": ["1", "2"]}
@@ -72,7 +72,7 @@ async def test_config_flow_location_creates_entry(hass: HomeAssistant) -> None:
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["title"] == "Athletic Fitness"
     assert result["data"]["email"] == "test@example.com"
-    assert result["data"]["password"] == "password"
+    assert result["data"]["password"] == "test_password"
     assert result["data"]["gyms"] == [
         {"gym_id": 1, "gym_name": "Mladost", "city": "Sofia"},
         {"gym_id": 2, "gym_name": "Center", "city": "Plovdiv"},
@@ -87,7 +87,7 @@ async def test_config_flow_reconfigure_updates_selected_gyms(
         domain=DOMAIN,
         data={
             "email": "test@example.com",
-            "password": "password",
+            "password": "test_password",
             "gyms": [{"gym_id": 1, "gym_name": "Mladost", "city": "Sofia"}],
         },
     )
@@ -177,7 +177,7 @@ async def test_config_flow_reconfigure_rejects_more_than_five_gyms(
         domain=DOMAIN,
         data={
             "email": "test@example.com",
-            "password": "password",
+            "password": "test_password",
             "gyms": [{"gym_id": 1, "gym_name": "Mladost", "city": "Sofia"}],
         },
     )
