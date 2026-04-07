@@ -12,9 +12,13 @@ The integration uses the official Athletic Fitness platform and requires an exis
 
 ## Installation
 
-Since this is an unofficial integration, you need [HACS (Home Assistant Community Store)](https://hacs.xyz/docs/setup/download).
+Since this is an unofficial integration, you need to have [HACS (Home Assistant Community Store)](https://hacs.xyz/docs/setup/download) configured.
 
 After installing HACS, open Integrations, search for **Athletic Fitness Bulgaria**, open the integration and click Download.
+
+Alternatively you can use the button below:
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Nedevski&repository=hass_athletic_fitness_bulgaria&category=integration)
 
 **You have to restart Home Assistant in order to be able to see the integration!**
 
@@ -24,10 +28,7 @@ Settings => Devices and services => Add integration => Athletic Fitness Bulgaria
 
 ## How it works
 
-To configure the integration, you need:
-
-- Athletic Fitness account email
-- Athletic Fitness account password
+To configure the integration, you need your Athletic Fitness account - email and password
 
 During setup, you can choose up to 5 gyms to monitor.
 
@@ -38,8 +39,10 @@ For each selected gym, one sensor entity is created and periodically updated:
 ## Notes
 
 - The integration is cloud polling based.
-- Data availability depends on Athletic Fitness API availability and your account access rights.
+- Data availability depends on Athletic Fitness API availability.
 
 ---
 
-If you like my work - consider supporting me.
+If you like my work - consider supporting me:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nedevski/tip)

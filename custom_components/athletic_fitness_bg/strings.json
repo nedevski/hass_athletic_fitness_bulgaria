@@ -1,12 +1,12 @@
 {
   "config": {
     "abort": {
-      "already_configured": "Athletic Fitness BG is already configured. Only one instance is allowed.",
+      "already_configured": "Athletic Fitness is already configured. Only one instance is allowed.",
       "reconfigure_failed": "Reconfiguration failed",
       "reconfigure_successful": "Reconfiguration was successful"
     },
     "error": {
-      "cannot_connect": "Cannot connect to the Athletic Fitness BG API",
+      "cannot_connect": "Cannot connect to the Athletic Fitness API",
       "cannot_fetch_gyms": "Cannot fetch gyms from the API",
       "invalid_auth": "Invalid email or password",
       "max_gyms_selected": "You can select up to 5 gyms"
