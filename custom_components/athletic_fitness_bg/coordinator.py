@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 from datetime import timedelta
 import logging
-from typing import cast
 
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
@@ -48,9 +47,7 @@ class AthleticFitnessBGCoordinator(DataUpdateCoordinator[list[GymDetails]]):
         """Build gym detail objects from config entry data."""
         gyms_data = config_entry.data["gyms"]
         return [
-            GymDetails(
-                gym_id=gym["gym_id"], gym_name=gym["gym_name"], city=gym.get("city", "")
-            )
+            GymDetails(gym_id=gym["gym_id"], gym_name=gym["gym_name"], city=gym["city"])
             for gym in gyms_data
         ]
 
@@ -70,10 +67,10 @@ class AthleticFitnessBGCoordinator(DataUpdateCoordinator[list[GymDetails]]):
             raise UpdateFailed(f"Error fetching people counts: {err}") from err
 
         for gym, result in zip(self.gyms, results, strict=False):
-            if isinstance(result, Exception):
+            if isinstance(result, BaseException):
                 raise UpdateFailed(
                     f"Error fetching people count for gym {gym.gym_id}: {result}"
                 ) from result
-            gym.people_count = cast(int, result)
+            gym.people_count = result
 
         return self.gyms

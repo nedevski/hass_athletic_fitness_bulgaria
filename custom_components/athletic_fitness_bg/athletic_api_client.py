@@ -61,8 +61,10 @@ class AthleticApiClient:
             # Store the token and expiry date
             self._access_token = data.get("accessToken")
             if data.get("expirationDate"):
-                # Parse the ISO format datetime string
-                self._token_expiry = datetime.fromisoformat(data["expirationDate"])
+                parsed_expiration = datetime.fromisoformat(data["expirationDate"])
+                if parsed_expiration.tzinfo is None:
+                    parsed_expiration = parsed_expiration.replace(tzinfo=UTC)
+                self._token_expiry = parsed_expiration
         except aiohttp.ClientError as err:
             _LOGGER.error("Error connecting to Athletic Fitness BG API: %s", err)
             raise AthleticApiClientError("Connection error") from err
@@ -86,9 +88,9 @@ class AthleticApiClient:
             response.raise_for_status()
             gyms = await response.json()
 
-            # Filter out gyms where city is "None" and sort by name descending
-            filtered_gyms = [gym for gym in gyms if gym.get("city") != "None"]
-            filtered_gyms.sort(key=lambda x: x.get("name", ""), reverse=True)
+            # Keep gyms with a meaningful city and sort by display name.
+            filtered_gyms = [gym for gym in gyms if gym.get("city") is not None]
+            filtered_gyms.sort(key=lambda gym: gym.get("gymName", ""), reverse=True)
         except aiohttp.ClientError as err:
             _LOGGER.error("Error fetching gyms from Athletic Fitness BG API: %s", err)
             raise AthleticApiClientError("Connection error") from err

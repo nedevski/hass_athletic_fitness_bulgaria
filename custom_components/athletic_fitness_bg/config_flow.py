@@ -22,7 +22,7 @@ from .athletic_api_client import (
     AthleticApiClientAuthError,
     AthleticApiClientError,
 )
-from .const import DOMAIN
+from .const import DOMAIN, MAX_GYMS
 from .models import GymDetails
 
 _LOGGER = logging.getLogger(__name__)
@@ -50,6 +50,10 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         """Handle the initial step."""
+        # Check for existing instance
+        await self.async_set_unique_id(DOMAIN)
+        self._abort_if_unique_id_configured()
+
         errors: dict[str, str] = {}
 
         if user_input is not None:
@@ -80,22 +84,15 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         """Handle the location selection step."""
         if user_input is not None:
-            selected_gym_ids = [int(gid) for gid in user_input["gym_ids"]]
-            selected_gyms = [
-                self._available_gyms[gym_id] for gym_id in selected_gym_ids
-            ]
+            if len(user_input["gym_ids"]) > MAX_GYMS:
+                return await self._show_gym_selection_form(
+                    "location",
+                    user_input["gym_ids"],
+                    {"base": "max_gyms_selected"},
+                )
 
-            config_data = {
-                **self._user_data,
-                "gyms": [
-                    {"gym_id": gym.gym_id, "gym_name": gym.gym_name, "city": gym.city}
-                    for gym in selected_gyms
-                ],
-            }
-
-            # Single-instance integration uses a static unique ID
-            await self.async_set_unique_id(DOMAIN)
-            self._abort_if_unique_id_configured()
+            selected_gyms = self._selected_gyms_from_input(user_input)
+            config_data = {**self._user_data, "gyms": self._serialize_gyms(selected_gyms)}
 
             return self.async_create_entry(
                 title="Athletic Fitness",
@@ -110,7 +107,10 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
         await client.authenticate(email, password)
 
     async def _show_gym_selection_form(
-        self, step_id: str, default_gym_ids: list[str] | None = None
+        self,
+        step_id: str,
+        default_gym_ids: list[str] | None = None,
+        errors: dict[str, str] | None = None,
     ) -> ConfigFlowResult:
         """Show the gym selection form."""
         # Fetch available gyms
@@ -129,7 +129,9 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
 
         self._available_gyms = {
             gym["gymId"]: GymDetails(
-                gym_id=gym["gymId"], gym_name=gym["gymName"], city=gym.get("city", "")
+                gym_id=gym["gymId"],
+                gym_name=gym["gymName"],
+                city=gym["city"],
             )
             for gym in gyms
         }
@@ -157,7 +159,22 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id=step_id,
             data_schema=schema,
+            errors=errors,
+            description_placeholders={"max_gyms": str(MAX_GYMS)},
         )
+
+    def _selected_gyms_from_input(self, user_input: dict[str, Any]) -> list[GymDetails]:
+        """Return selected gym models from submitted form input."""
+        selected_gym_ids = [int(gym_id) for gym_id in user_input["gym_ids"]]
+        return [self._available_gyms[gym_id] for gym_id in selected_gym_ids]
+
+    @staticmethod
+    def _serialize_gyms(gyms: list[GymDetails]) -> list[dict[str, Any]]:
+        """Serialize gym details for storage in config entry data."""
+        return [
+            {"gym_id": gym.gym_id, "gym_name": gym.gym_name, "city": gym.city}
+            for gym in gyms
+        ]
 
     async def async_step_reconfigure(
         self, user_input: dict[str, Any] | None = None
@@ -170,17 +187,17 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
             return self.async_abort(reason="reconfigure_failed")
 
         if user_input is not None:
-            selected_gym_ids = [int(gid) for gid in user_input["gym_ids"]]
-            selected_gyms = [
-                self._available_gyms[gym_id] for gym_id in selected_gym_ids
-            ]
+            if len(user_input["gym_ids"]) > MAX_GYMS:
+                return await self._show_gym_selection_form(
+                    "reconfigure",
+                    user_input["gym_ids"],
+                    {"base": "max_gyms_selected"},
+                )
 
+            selected_gyms = self._selected_gyms_from_input(user_input)
             updated_data = {
                 **config_entry.data,
-                "gyms": [
-                    {"gym_id": gym.gym_id, "gym_name": gym.gym_name, "city": gym.city}
-                    for gym in selected_gyms
-                ],
+                "gyms": self._serialize_gyms(selected_gyms),
             }
 
             self.hass.config_entries.async_update_entry(config_entry, data=updated_data)
