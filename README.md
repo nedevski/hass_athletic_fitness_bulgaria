@@ -8,9 +8,9 @@
 
 Интеграцията с **Athletic Fitness** позволява да се проверява колко хора се намират в момента в залите на Athletic Fitness.
 
-Интеграцията използва официалната платформа на Athletic Fitness и изисква съществуващ акаунт: [athletic.bg](https://athletic.bg/).
+Данните се извличат от официалната платформа на Athletic Fitness, което изисква да имате регистрация: [athletic.bg](https://athletic.bg/).
 
-## Инсталация
+## Инсталиране
 
 Тъй като това е неофициална интеграция, е необходимо да имате инсталиран [HACS (Home Assistant Community Store)](https://hacs.xyz/docs/setup/download).
 
