@@ -3,12 +3,12 @@
 from unittest.mock import AsyncMock, patch
 
 from homeassistant import config_entries
-from homeassistant.components.athletic_fitness_bg.athletic_api_client import (
+from custom_components.athletic_fitness_bg.athletic_api_client import (
     AthleticApiClient,
     AthleticApiClientAuthError,
 )
-from homeassistant.components.athletic_fitness_bg.config_flow import ConfigFlow
-from homeassistant.components.athletic_fitness_bg.const import DOMAIN
+from custom_components.athletic_fitness_bg.config_flow import ConfigFlow
+from custom_components.athletic_fitness_bg.const import DOMAIN
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 
@@ -46,7 +46,7 @@ async def test_config_flow_user_step(hass: HomeAssistant) -> None:
         ),
     ):
         result = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {"email": "test", "password": "test"}
+            result["flow_id"], {"email": "test_email@example.com", "password": "test_password"}
         )
 
     assert result["type"] == FlowResultType.FORM
@@ -158,7 +158,7 @@ async def test_config_flow_location_step_rejects_more_than_five_gyms(
         ),
     ):
         location_step = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {"email": "test@example.com", "password": "password"}
+            result["flow_id"], {"email": "test@example.com", "password": "test_password"}
         )
         result = await hass.config_entries.flow.async_configure(
             location_step["flow_id"],
