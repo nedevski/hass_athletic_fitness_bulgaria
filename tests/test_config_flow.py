@@ -11,8 +11,7 @@ from custom_components.athletic_fitness_bg.config_flow import ConfigFlow
 from custom_components.athletic_fitness_bg.const import DOMAIN
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
-
-from tests.common import MockConfigEntry
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 GYM_LIST = [
     {"gymId": 1, "gymName": "Mladost", "city": "Sofia"},

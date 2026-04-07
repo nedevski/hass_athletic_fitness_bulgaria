@@ -67,7 +67,7 @@ class AthleticFitnessBGCoordinator(DataUpdateCoordinator[list[GymDetails]]):
             raise UpdateFailed(f"Error fetching people counts: {err}") from err
 
         for gym, result in zip(self.gyms, results, strict=False):
-            if isinstance(result, Exception):
+            if isinstance(result, BaseException):
                 raise UpdateFailed(
                     f"Error fetching people count for gym {gym.gym_id}: {result}"
                 ) from result

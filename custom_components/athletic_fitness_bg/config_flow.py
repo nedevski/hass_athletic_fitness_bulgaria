@@ -22,7 +22,7 @@ from .athletic_api_client import (
     AthleticApiClientAuthError,
     AthleticApiClientError,
 )
-from .const import DOMAIN
+from .const import DOMAIN, MAX_GYMS
 from .models import GymDetails
 
 _LOGGER = logging.getLogger(__name__)
@@ -84,6 +84,13 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         """Handle the location selection step."""
         if user_input is not None:
+            if len(user_input["gym_ids"]) > MAX_GYMS:
+                return await self._show_gym_selection_form(
+                    "location",
+                    user_input["gym_ids"],
+                    {"base": "max_gyms_selected"},
+                )
+
             selected_gyms = self._selected_gyms_from_input(user_input)
             config_data = {**self._user_data, "gyms": self._serialize_gyms(selected_gyms)}
 
@@ -100,7 +107,10 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
         await client.authenticate(email, password)
 
     async def _show_gym_selection_form(
-        self, step_id: str, default_gym_ids: list[str] | None = None
+        self,
+        step_id: str,
+        default_gym_ids: list[str] | None = None,
+        errors: dict[str, str] | None = None,
     ) -> ConfigFlowResult:
         """Show the gym selection form."""
         # Fetch available gyms
@@ -149,6 +159,8 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id=step_id,
             data_schema=schema,
+            errors=errors,
+            description_placeholders={"max_gyms": str(MAX_GYMS)},
         )
 
     def _selected_gyms_from_input(self, user_input: dict[str, Any]) -> list[GymDetails]:
@@ -175,6 +187,13 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
             return self.async_abort(reason="reconfigure_failed")
 
         if user_input is not None:
+            if len(user_input["gym_ids"]) > MAX_GYMS:
+                return await self._show_gym_selection_form(
+                    "reconfigure",
+                    user_input["gym_ids"],
+                    {"base": "max_gyms_selected"},
+                )
+
             selected_gyms = self._selected_gyms_from_input(user_input)
             updated_data = {
                 **config_entry.data,
