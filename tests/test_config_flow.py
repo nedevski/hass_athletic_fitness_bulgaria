@@ -7,21 +7,21 @@ from custom_components.athletic_fitness_bg.athletic_api_client import (
     AthleticApiClientAuthError,
 )
 from custom_components.athletic_fitness_bg.config_flow import ConfigFlow
+from custom_components.athletic_fitness_bg.const import DOMAIN
 
+from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
+from homeassistant.data_entry_flow import FlowResultType
 
 
 async def test_config_flow_user_step(hass: HomeAssistant) -> None:
     """Test the user step of the config flow."""
-    flow = ConfigFlow()
-    flow.hass = hass
-
-    # Test initial step
-    result = await flow.async_step_user()
-    assert result["type"] == "form"
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "user"
 
-    # Test with valid credentials and mocked gym list
     with (
         patch.object(ConfigFlow, "_test_credentials", AsyncMock(return_value=None)),
         patch.object(
@@ -32,24 +32,31 @@ async def test_config_flow_user_step(hass: HomeAssistant) -> None:
             ),
         ),
     ):
-        result = await flow.async_step_user({"email": "test", "password": "test"})
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {"email": "test", "password": "test"}
+        )
 
-    assert result["type"] == "form"
+    assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "location"
 
 
 async def test_config_flow_user_step_invalid_auth(hass: HomeAssistant) -> None:
     """Test the user step with invalid credentials."""
-    flow = ConfigFlow()
-    flow.hass = hass
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "user"
 
     with patch.object(
         ConfigFlow,
         "_test_credentials",
         AsyncMock(side_effect=AthleticApiClientAuthError("Invalid credentials")),
     ):
-        result = await flow.async_step_user({"email": "invalid", "password": "invalid"})
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {"email": "invalid", "password": "invalid"}
+        )
 
-    assert result["type"] == "form"
+    assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "user"
     assert result["errors"] == {"base": "invalid_auth"}
