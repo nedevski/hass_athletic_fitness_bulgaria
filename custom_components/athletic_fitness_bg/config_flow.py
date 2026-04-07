@@ -50,6 +50,10 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         """Handle the initial step."""
+        # Check for existing instance
+        await self.async_set_unique_id(DOMAIN)
+        self._abort_if_unique_id_configured()
+
         errors: dict[str, str] = {}
 
         if user_input is not None:
@@ -93,10 +97,6 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
                 ],
             }
 
-            # Single-instance integration uses a static unique ID
-            await self.async_set_unique_id(DOMAIN)
-            self._abort_if_unique_id_configured()
-
             return self.async_create_entry(
                 title="Athletic Fitness",
                 data=config_data,
@@ -129,7 +129,7 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
 
         self._available_gyms = {
             gym["gymId"]: GymDetails(
-                gym_id=gym["gymId"], gym_name=gym["gymName"], city=gym.get("city", "")
+                gym_id=gym["gymId"], gym_name=gym["gymName"], city=gym["city"]
             )
             for gym in gyms
         }
