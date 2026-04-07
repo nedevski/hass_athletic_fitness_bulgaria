@@ -89,11 +89,7 @@ class AthleticApiClient:
             gyms = await response.json()
 
             # Keep gyms with a meaningful city and sort by display name.
-            filtered_gyms = [
-                gym
-                for gym in gyms
-                if gym.get("city") is not None
-            ]
+            filtered_gyms = [gym for gym in gyms if gym.get("city") is not None]
             filtered_gyms.sort(key=lambda gym: gym.get("gymName", ""), reverse=True)
         except aiohttp.ClientError as err:
             _LOGGER.error("Error fetching gyms from Athletic Fitness BG API: %s", err)

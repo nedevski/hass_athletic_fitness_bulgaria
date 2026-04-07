@@ -1,0 +1,48 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Athletic Fitness вече е конфигуриран.",
+      "reconfigure_failed": "Преконфигурирането не бе успешно.",
+      "reconfigure_successful": "Преконфигурирането бе успешно."
+    },
+    "error": {
+      "cannot_connect": "Няма връзка с Athletic Fitness API.",
+      "cannot_fetch_gyms": "Неуспешно извличане на фитнес залите от API.",
+      "invalid_auth": "Невалиден имейл или парола.",
+      "max_gyms_selected": "Можете да изберете най-много 5 фитнес зали."
+    },
+    "step": {
+      "user": {
+        "data": {
+          "email": "Имейл",
+          "password": "Парола"
+        }
+      },
+      "location": {
+        "description": "Изберете фитнес залите, които искате да наблюдавате. Можете да изберете до {max_gyms} зали.",
+        "data": {
+          "gym_ids": "Фитнес зали"
+        },
+        "data_description": {
+          "gym_ids": "Изберете фитнес залите, които искате да наблюдавате (до {max_gyms})"
+        }
+      },
+      "reconfigure": {
+        "description": "Изберете фитнес залите, които искате да наблюдавате. Можете да изберете до {max_gyms} зали.",
+        "data": {
+          "gym_ids": "Фитнес зали"
+        },
+        "data_description": {
+          "gym_ids": "Изберете фитнес залите, които искате да наблюдавате (до {max_gyms})"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "people_count": {
+        "name": "Брой хора"
+      }
+    }
+  }
+}

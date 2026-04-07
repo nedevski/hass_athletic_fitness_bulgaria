@@ -1,5 +1,11 @@
 ## Athletic Fitness Bulgaria - a HACS integration for Home Assistant
 
+![Downloads](https://img.shields.io/github/downloads/nedevski/hass_athletic_fitness_bulgaria/latest/total?style=flat-square)
+![Last release](https://img.shields.io/github/release-date/nedevski/hass_athletic_fitness_bulgaria?style=flat-square)
+![Code size](https://img.shields.io/github/languages/code-size/nedevski/hass_athletic_fitness_bulgaria?style=flat-square)
+[![Quality Gate](https://img.shields.io/sonar/quality_gate/nedevski_hass_athletic_fitness_bulgaria?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/summary/overall?id=nedevski_hass_athletic_fitness_bulgaria&branch=main)
+[![Code coverage](https://img.shields.io/sonar/coverage/nedevski_hass_athletic_fitness_bulgaria?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/component_measures?id=nedevski_hass_athletic_fitness_bulgaria&metric=coverage&view=list)
+
 The Athletic Fitness Bulgaria custom integration allows users to check how many people are currently in Athletic Fitness gyms in Bulgaria.
 
 The integration uses the official Athletic Fitness platform and requires an existing account: [athletic.bg](https://athletic.bg/).
