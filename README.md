@@ -46,7 +46,7 @@ Settings => Devices and services => Add integration => Athletic Fitness Bulgaria
 
 ---
 
-Ако харесвате работата ми – може да ме подкрепите:
+Ако харесвате работата ми, почерпете ме с 1 бира в Ko-Fi:
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nedevski/tip)
 
