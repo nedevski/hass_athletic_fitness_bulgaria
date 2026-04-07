@@ -17,21 +17,29 @@ from custom_components.athletic_fitness_bg.athletic_api_client import (
 async def test_authenticate_stores_token_and_normalizes_expiration(hass) -> None:
     """Authenticate should store the token and normalize naive expirations."""
     client = AthleticApiClient(hass)
+
+    # Create dynamic expiration (naive datetime)
+    mock_expiration = datetime.now() + timedelta(minutes=5)
+    mock_expiration_str = mock_expiration.isoformat()
+
     response = Mock(status=200)
     response.raise_for_status = Mock()
     response.json = AsyncMock(
         return_value={
             "accessToken": "token-123",
-            "expirationDate": "2026-04-07T12:34:56",
+            "expirationDate": mock_expiration_str,
         }
     )
     client.session = Mock(post=AsyncMock(return_value=response))
 
     result = await client.authenticate("user@example.com", "secret")
 
+    # Expected normalized expiration (UTC-aware)
+    expected_expiration = mock_expiration.replace(tzinfo=UTC)
+
     assert result["accessToken"] == "token-123"
     assert client._access_token == "token-123"
-    assert client._token_expiry == datetime(2026, 4, 7, 12, 34, 56, tzinfo=UTC)
+    assert client._token_expiry == expected_expiration
     assert client._get_auth_headers() == {"Authorization": "Bearer token-123"}
 
 
