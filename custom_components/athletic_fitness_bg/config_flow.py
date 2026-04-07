@@ -84,18 +84,8 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         """Handle the location selection step."""
         if user_input is not None:
-            selected_gym_ids = [int(gid) for gid in user_input["gym_ids"]]
-            selected_gyms = [
-                self._available_gyms[gym_id] for gym_id in selected_gym_ids
-            ]
-
-            config_data = {
-                **self._user_data,
-                "gyms": [
-                    {"gym_id": gym.gym_id, "gym_name": gym.gym_name, "city": gym.city}
-                    for gym in selected_gyms
-                ],
-            }
+            selected_gyms = self._selected_gyms_from_input(user_input)
+            config_data = {**self._user_data, "gyms": self._serialize_gyms(selected_gyms)}
 
             return self.async_create_entry(
                 title="Athletic Fitness",
@@ -129,7 +119,9 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
 
         self._available_gyms = {
             gym["gymId"]: GymDetails(
-                gym_id=gym["gymId"], gym_name=gym["gymName"], city=gym["city"]
+                gym_id=gym["gymId"],
+                gym_name=gym["gymName"],
+                city=gym["city"],
             )
             for gym in gyms
         }
@@ -159,6 +151,19 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
             data_schema=schema,
         )
 
+    def _selected_gyms_from_input(self, user_input: dict[str, Any]) -> list[GymDetails]:
+        """Return selected gym models from submitted form input."""
+        selected_gym_ids = [int(gym_id) for gym_id in user_input["gym_ids"]]
+        return [self._available_gyms[gym_id] for gym_id in selected_gym_ids]
+
+    @staticmethod
+    def _serialize_gyms(gyms: list[GymDetails]) -> list[dict[str, Any]]:
+        """Serialize gym details for storage in config entry data."""
+        return [
+            {"gym_id": gym.gym_id, "gym_name": gym.gym_name, "city": gym.city}
+            for gym in gyms
+        ]
+
     async def async_step_reconfigure(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
@@ -170,17 +175,10 @@ class ConfigFlow(ConfigEntriesFlow, domain=DOMAIN):
             return self.async_abort(reason="reconfigure_failed")
 
         if user_input is not None:
-            selected_gym_ids = [int(gid) for gid in user_input["gym_ids"]]
-            selected_gyms = [
-                self._available_gyms[gym_id] for gym_id in selected_gym_ids
-            ]
-
+            selected_gyms = self._selected_gyms_from_input(user_input)
             updated_data = {
                 **config_entry.data,
-                "gyms": [
-                    {"gym_id": gym.gym_id, "gym_name": gym.gym_name, "city": gym.city}
-                    for gym in selected_gyms
-                ],
+                "gyms": self._serialize_gyms(selected_gyms),
             }
 
             self.hass.config_entries.async_update_entry(config_entry, data=updated_data)

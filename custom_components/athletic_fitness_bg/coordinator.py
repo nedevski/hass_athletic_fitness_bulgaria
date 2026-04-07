@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 from datetime import timedelta
 import logging
-from typing import cast
 
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
@@ -72,6 +71,6 @@ class AthleticFitnessBGCoordinator(DataUpdateCoordinator[list[GymDetails]]):
                 raise UpdateFailed(
                     f"Error fetching people count for gym {gym.gym_id}: {result}"
                 ) from result
-            gym.people_count = cast(int, result)
+            gym.people_count = result
 
         return self.gyms

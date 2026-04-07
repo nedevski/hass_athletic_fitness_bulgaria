@@ -50,19 +50,24 @@ class PeopleInGymSensor(CoordinatorEntity[AthleticFitnessBGCoordinator], SensorE
             model="Cloud Service",
         )
 
+    def _coordinator_gym(self) -> GymDetails | None:
+        """Return the latest coordinator gym model for this entity."""
+        if self.coordinator.data is None:
+            return None
+        return next(
+            (gym for gym in self.coordinator.data if gym.gym_id == self._gym.gym_id),
+            None,
+        )
+
     @property
     def available(self) -> bool:
         """Return if the entity is available."""
-        if not super().available or self.coordinator.data is None:
-            return False
-        return any(gym.gym_id == self._gym.gym_id for gym in self.coordinator.data)
+        return super().available and self._coordinator_gym() is not None
 
     @property
     def native_value(self) -> int | None:
         """Return the current people count for this gym."""
-        if self.coordinator.data is None:
+        gym = self._coordinator_gym()
+        if gym is None:
             return None
-        matching_gyms = [
-            gym for gym in self.coordinator.data if gym.gym_id == self._gym.gym_id
-        ]
-        return matching_gyms[0].people_count if matching_gyms else None
+        return gym.people_count
