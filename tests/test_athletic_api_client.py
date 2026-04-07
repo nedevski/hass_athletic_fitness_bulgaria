@@ -19,7 +19,7 @@ async def test_authenticate_stores_token_and_normalizes_expiration(hass) -> None
     client = AthleticApiClient(hass)
 
     # Create dynamic expiration (naive datetime)
-    mock_expiration = datetime.now() + timedelta(minutes=5)
+    mock_expiration = datetime.now().replace(microsecond=0) + timedelta(minutes=5)
     mock_expiration_str = mock_expiration.isoformat()
 
     response = Mock(status=200)
