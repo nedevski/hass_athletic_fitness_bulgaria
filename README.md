@@ -1,14 +1,17 @@
-# Athletic Fitness Bulgaria - интеграция за Home Assistant
+# Athletic Fitness Bulgaria - **неофициална** интеграция за Home Assistant
+
 
 ![Downloads](https://img.shields.io/github/downloads/nedevski/hass_athletic_fitness_bulgaria/latest/total?style=flat-square)
 ![Last release](https://img.shields.io/github/release-date/nedevski/hass_athletic_fitness_bulgaria?style=flat-square)
 ![Code size](https://img.shields.io/github/languages/code-size/nedevski/hass_athletic_fitness_bulgaria?style=flat-square)
 [![Quality Gate](https://img.shields.io/sonar/quality_gate/nedevski_hass_athletic_fitness_bulgaria?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/summary/overall?id=nedevski_hass_athletic_fitness_bulgaria&branch=main)
 [![Code coverage](https://img.shields.io/sonar/coverage/nedevski_hass_athletic_fitness_bulgaria?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/component_measures?id=nedevski_hass_athletic_fitness_bulgaria&metric=coverage&view=list)
+![Athletic logo](/images/banner.png)
 
-Интеграцията с **Athletic Fitness** позволява да се проверява колко хора се намират в момента в залите на Athletic Fitness.
+Интеграцията с **Athletic Fitness** позволява да се проверява колко хора се намират в момента в залите на Athletic Fitness. Това е независим проект, който **не е** свързан по никакъв начин с официалния екип на Атлетик Фитнес.
 
-Данните се извличат от официалната платформа на Athletic Fitness, което изисква да имате регистрация: [athletic.bg](https://athletic.bg/).
+
+Данните се извличат от официалната платформа на Athletic Fitness, което изисква да имате регистрация на [athletic.bg](https://athletic.bg/).
 
 ## Инсталиране
 
@@ -35,9 +38,11 @@ Settings => Devices and services => Add integration => Athletic Fitness Bulgaria
 
 По време на настройката можете да изберете до 5 зали, които да наблюдавате.
 
-За всяка избрана зала се създава отделен сензор, който се обновява периодично:
+За всяка избрана зала се създава отделен сензор, който се обновява на всеки 5 минути:
 
 - Брой хора (sensor, int) – текущият брой хора в съответната зала
+
+![Screenshot](/images/screenshot-en.png)
 
 ## Бележки
 
@@ -54,7 +59,7 @@ Settings => Devices and services => Add integration => Athletic Fitness Bulgaria
 
 # Athletic Fitness Bulgaria - a HACS integration for Home Assistant
 
-The Athletic Fitness Bulgaria custom integration allows users to check how many people are currently in Athletic Fitness gyms in Bulgaria.
+The Athletic Fitness Bulgaria custom integration allows users to check how many people are currently in Athletic Fitness gyms in Bulgaria. This is an independent project that is **not affiliated** in any way with the official Athletic Fitness team.
 
 The integration uses the official Athletic Fitness platform and requires an existing account: [athletic.bg](https://athletic.bg/).
 
@@ -84,9 +89,11 @@ To configure the integration, you need your Athletic Fitness account - email and
 
 During setup, you can choose up to 5 gyms to monitor.
 
-For each selected gym, one sensor entity is created and periodically updated:
+For each selected gym, one sensor entity is created and updated every 5 minutes:
 
 - People count ([sensor, int](https://www.home-assistant.io/integrations/sensor/)) - current number of people in that gym
+
+![Screenshot](/images/screenshot-en.png)
 
 ## Notes
 
