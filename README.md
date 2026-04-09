@@ -6,6 +6,7 @@
 ![Code size](https://img.shields.io/github/languages/code-size/nedevski/hass_athletic_fitness_bulgaria?style=flat-square)
 [![Quality Gate](https://img.shields.io/sonar/quality_gate/nedevski_hass_athletic_fitness_bulgaria?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/summary/overall?id=nedevski_hass_athletic_fitness_bulgaria&branch=main)
 [![Code coverage](https://img.shields.io/sonar/coverage/nedevski_hass_athletic_fitness_bulgaria?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/component_measures?id=nedevski_hass_athletic_fitness_bulgaria&metric=coverage&view=list)
+
 ![Athletic logo](/images/banner.png)
 
 Интеграцията с **Athletic Fitness** позволява да се проверява колко хора се намират в момента в залите на Athletic Fitness. Това е независим проект, който **не е** свързан по никакъв начин с официалния екип на Атлетик Фитнес.
