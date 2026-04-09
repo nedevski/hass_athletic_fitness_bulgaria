@@ -9,8 +9,7 @@
 
 ![Athletic logo](/images/banner.png)
 
-Интеграцията с **Athletic Fitness** позволява да се проверява колко хора се намират в момента в залите на Athletic Fitness. Това е независим проект, който **не е** свързан по никакъв начин с официалния екип на Атлетик Фитнес.
-
+Тази интеграция позволява да се проверява автоматично колко хора се намират в момента в залите на **Athletic Fitness**. Това е независим проект, който **не е** свързан по никакъв начин с официалния екип на Атлетик Фитнес.
 
 Данните се извличат от официалната платформа на Athletic Fitness, което изисква да имате регистрация на [athletic.bg](https://athletic.bg/).
 
@@ -60,7 +59,7 @@ Settings => Devices and services => Add integration => Athletic Fitness Bulgaria
 
 # Athletic Fitness Bulgaria - a HACS integration for Home Assistant
 
-The Athletic Fitness Bulgaria custom integration allows users to check how many people are currently in Athletic Fitness gyms in Bulgaria. This is an independent project that is **not affiliated** in any way with the official Athletic Fitness team.
+The Athletic Fitness custom integration allows users to check how many people are currently in Athletic's gyms in Bulgaria. This is an independent project that is **not affiliated** in any way with the official Athletic Fitness team.
 
 The integration uses the official Athletic Fitness platform and requires an existing account: [athletic.bg](https://athletic.bg/).
 
