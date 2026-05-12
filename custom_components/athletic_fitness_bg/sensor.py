@@ -1,7 +1,5 @@
 """Sensor platform for Athletic Fitness BG integration."""
 
-from __future__ import annotations
-
 from homeassistant import config_entries
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.core import HomeAssistant
